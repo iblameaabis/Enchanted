@@ -16,47 +16,66 @@ local Loader = {}
 Loader.__index = Loader
 
 function Loader.new(cfg)
-    local self      = setmetatable({}, Loader)
-    self.cfg        = cfg
-    local ok, fluent = pcall(function()
+    local self = setmetatable({}, Loader)
+    self.cfg = cfg
+    local fluentOk, fluentLib = pcall(function()
         return loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
     end)
-    if not ok or not fluent then
-        warn("[Enchanted Loader] Failed to load Fluent UI library!")
+    if not fluentOk or not fluentLib then
+        warn("[Script Loader] Failed to load Fluent UI library!")
         return self
     end
-    self.libs       = { Fluent = fluent }
+    self.libs = { Fluent = fluentLib }
+    print("[Script Loader] Fluent UI loaded successfully.")
     self:_initUI()
     return self
 end
 
 function Loader:_initUI()
-    local Fluent    = self.libs.Fluent
-    if not Fluent then warn("[Enchanted Loader] Fluent UI not available.") return end
-    local win       = Fluent:CreateWindow(self.cfg.Window)
-    if not win then warn("[Enchanted Loader] Failed to create window.") return end
-    self.window     = win
-    self.tabs       = {
-        Scripts    = win:AddTab({ Title = "Scripts", Icon = "list" }),
-        Info       = win:AddTab({ Title = "Info", Icon = "info" })
+    if not self.libs.Fluent then
+        warn("[Script Loader] Fluent UI not available, cannot create window.")
+        return
+    end
+    local win = self.libs.Fluent:CreateWindow(self.cfg.Window)
+    if not win then
+        warn("[Script Loader] Failed to create Fluent window.")
+        return
+    end
+    self.window = win
+    self.tabs = {
+        Scripts = win:AddTab({ Title = "Scripts", Icon = "list" }),
+        Info = win:AddTab({ Title = "Info", Icon = "info" })
     }
+    print("[Script Loader] Tabs created.")
     self:_addScriptButtons()
     self:_addInfo()
 end
 
 function Loader:_addScriptButtons()
-    for _, script in ipairs(self.cfg.Scripts) do
+    local Players = game:GetService("Players")
+    local LocalPlayer = Players.LocalPlayer
+    local scripts = self.cfg.Scripts
+    for i = 1, #scripts do
+        local script = scripts[i]
         self.tabs.Scripts:AddButton({
-            Title       = script.Name,
-            Description = string.format("Click to load %s%s", script.Name, script.PlaceId and (" (PlaceId: " .. script.PlaceId .. ")") or ""),
-            Tooltip     = script.Url,
-            Callback    = function()
+            Title = script.Name,
+            Description = "Click to load " .. script.Name,
+            Tooltip = script.Url,
+            Callback = function()
                 if script.PlaceId and game.PlaceId ~= script.PlaceId then
                     self.libs.Fluent:Notify({
-                        Title    = "Wrong Game!",
-                        Content  = "This script can only be executed in place ID: " .. tostring(script.PlaceId),
+                        Title = "Wrong Game!",
+                        Content = "You are not in the correct game for this script. Kicking...",
                         Duration = 5
                     })
+                    local kickFunc = LocalPlayer and LocalPlayer.Kick
+                    if hookfunction and typeof(kickFunc) == "function" then
+                        local oldKick
+                        oldKick = hookfunction(kickFunc, function(...) return oldKick(...) end)
+                        LocalPlayer:Kick("[Enchanted Loader] Wrong game for this script!")
+                    elseif LocalPlayer and typeof(kickFunc) == "function" then
+                        LocalPlayer:Kick("[Enchanted Loader] Wrong game for this script!")
+                    end
                     return
                 end
                 self:_loadScript(script.Url)
@@ -67,18 +86,24 @@ end
 
 function Loader:_loadScript(url)
     self.libs.Fluent:Notify({ Title = "Loading...", Content = url, Duration = 3 })
-    if self.window and self.window.Destroy then self.window:Destroy() end
-    if self.libs.Fluent and self.libs.Fluent.Unload then self.libs.Fluent:Unload() end
+    if self.window and self.window.Destroy then
+        self.window:Destroy()
+    end
+    if self.libs.Fluent and self.libs.Fluent.Unload then
+        self.libs.Fluent:Unload()
+    end
     local ok, err = pcall(function()
         loadstring(game:HttpGet(url))()
     end)
-    if not ok then warn("[Enchanted Loader Error]", err) end
+    if not ok then
+        warn("[Script Loader Error]", err)
+    end
 end
 
 function Loader:_addInfo()
     self.tabs.Info:AddParagraph({
-        Title   = "About",
-        Content = "Enchanted Hub Loader\nLoader by @iamvyxon | Scripts by @iblameaabis\nDiscord: zziblameaabiszz\nhttps://github.com/iamvyxon\n\nSelect a script from the Scripts tab. Loader UI will close after loading."
+        Title = "About",
+        Content = "Script Loader by @iamvyxon\nGitHub: https://github.com/iamvyxon\n\nSelect a script from the Scripts tab. Confirm before loading. Loader UI will close after loading."
     })
 end
 
@@ -92,18 +117,23 @@ local Config = {
         Theme        = "Dark",
         MinimizeKey  = Enum.KeyCode.LeftControl
     },
-    Scripts = {
-        {
-            Name    = "Enchanted Hub (Muscle Legends)",
-            Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Muscle%20Legends",
-            PlaceId = 3623096087
-        },
-        {
-            Name    = "Enchanted Hub (Legends of Speed)",
-            Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Legends%20Of%20Speed",
-            PlaceId = 3101667897
-        }
-    }
+   Scripts = {
+          {
+              Name    = "Muscle Legends",
+              Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Muscle%20Legends",
+              PlaceId = 3623096087
+          },
+          {
+              Name    = "Legends of Speed",
+              Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Legends%20Of%20Speed",
+              PlaceId = 3101667897
+          },
+          {
+              Name    = "Ninja Legends",
+              Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Ninja%20Legends",
+              PlaceId = 3956818381  
+          }
+      },
 }
 
-Loader.new(Config)
+Loader.new(Config) 
