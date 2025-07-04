@@ -95,7 +95,7 @@ local Config = {
     Scripts = {
         {
             Name    = "Enchanted Hub (Muscle Legends)",
-            Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Enchanted%20Hub%20On%20Top",
+            Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Muscle%20Legends",
             PlaceId = 3623096087
         },
         {
