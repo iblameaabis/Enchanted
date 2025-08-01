@@ -132,7 +132,12 @@ local Config = {
               Name    = "Ninja Legends",
               Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Ninja%20Legends",
               PlaceId = 3956818381  
-          }
+          },
+          {
+              Name    = "Grow a Garden",
+              Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Grow%20A%20Garden",
+              PlaceId = 126884695634066
+          },
       },
 }
 
