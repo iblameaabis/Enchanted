@@ -52,8 +52,6 @@ function Loader:_initUI()
 end
 
 function Loader:_addScriptButtons()
-    local Players = game:GetService("Players")
-    local LocalPlayer = Players.LocalPlayer
     local scripts = self.cfg.Scripts
     for i = 1, #scripts do
         local script = scripts[i]
@@ -62,22 +60,6 @@ function Loader:_addScriptButtons()
             Description = "Click to load " .. script.Name,
             Tooltip = script.Url,
             Callback = function()
-                if script.PlaceId and game.PlaceId ~= script.PlaceId then
-                    self.libs.Fluent:Notify({
-                        Title = "Wrong Game!",
-                        Content = "You are not in the correct game for this script. Kicking...",
-                        Duration = 5
-                    })
-                    local kickFunc = LocalPlayer and LocalPlayer.Kick
-                    if hookfunction and typeof(kickFunc) == "function" then
-                        local oldKick
-                        oldKick = hookfunction(kickFunc, function(...) return oldKick(...) end)
-                        LocalPlayer:Kick("[Enchanted Loader] Wrong game for this script!")
-                    elseif LocalPlayer and typeof(kickFunc) == "function" then
-                        LocalPlayer:Kick("[Enchanted Loader] Wrong game for this script!")
-                    end
-                    return
-                end
                 self:_loadScript(script.Url)
             end
         })
@@ -117,38 +99,36 @@ local Config = {
         Theme        = "Dark",
         MinimizeKey  = Enum.KeyCode.LeftControl
     },
-   Scripts = {
-          {
-              Name    = "Muscle Legends",
-              Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Muscle%20Legends",
-              PlaceId = 3623096087
-          },
-          {
-              Name    = "Muscle Legends (PC version)",
-              Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Muscle%20Legends%20(PC)",
-              PlaceId = 3623096087
-          },
-          {
-              Name    = "Legends of Speed",
-              Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Legends%20Of%20Speed",
-              PlaceId = 3101667897
-          },
-          {
-              Name    = "Ninja Legends",
-              Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Ninja%20Legends",
-              PlaceId = 3956818381  
-          },
-          {
-              Name    = "Grow a Garden",
-              Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Grow%20A%20Garden",
-              PlaceId = 126884695634066
-          },
-          {
-              Name    = "Steal A Brainrot (CRACKED)",
-              Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Steal%20A%20Brainrot",
-              PlaceId = 109983668079237
-          },
-      },
+    Scripts = {
+        {
+            Name    = "Muscle Legends",
+            Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Muscle%20Legends"
+        },
+        {
+            Name    = "Muscle Legends (PC version)",
+            Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Muscle%20Legends%20(PC)"
+        },
+        {
+            Name    = "Legends of Speed",
+            Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Legends%20Of%20Speed"
+        },
+        {
+            Name    = "Ninja Legends",
+            Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Ninja%20Legends"
+        },
+        {
+            Name    = "Grow a Garden",
+            Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Grow%20A%20Garden"
+        },
+        {
+            Name    = "Steal A Brainrot (CRACKED)",
+            Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Steal%20A%20Brainrot"
+        },
+        {
+            Name    = "Rivals",
+            Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Rivals"
+        },
+    },
 }
 
-Loader.new(Config) 
+Loader.new(Config)
