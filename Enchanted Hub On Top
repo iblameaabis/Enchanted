@@ -101,6 +101,10 @@ local Config = {
     },
     Scripts = {
         {
+            Name    = "Anti AFK",
+            Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Anti-AFK"
+        },
+        {
             Name    = "Muscle Legends",
             Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Muscle%20Legends"
         },
