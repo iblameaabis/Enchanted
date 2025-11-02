@@ -2,8 +2,6 @@
 
     Author: @iamvyxon
     Enchanted Hub maintainer: @iblameaabis | Discord: zziblameaabiszz
-    GitHub: https://github.com/iamvyxon
-    https://discord.gg/w2XcZQeANj
 
     NOTE: I do not maintain the Scripts, it is maintained by @iblameaabis.
     If you have any issues with the scripts, please contact him.
@@ -131,6 +129,10 @@ local Config = {
         {
             Name    = "Rivals",
             Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Rivals"
+        },
+        {
+            Name    = "TP To Players",
+            Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/TP%20Players"
         },
     },
 }
