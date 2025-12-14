@@ -111,6 +111,10 @@ local Config = {
             Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Muscle%20Legends%20(PC)"
         },
         {
+            Name    = "Muscle Legends (Server Hop Kill)",
+            Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/ML%20Killing%20%5BServer%20Hop%5D"
+        },
+        {
             Name    = "Legends of Speed",
             Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Legends%20Of%20Speed"
         },
