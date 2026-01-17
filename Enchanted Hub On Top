@@ -131,6 +131,10 @@ local Config = {
             Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Steal%20A%20Brainrot"
         },
         {
+            Name    = "Escape Tsunami For Brainrots",
+            Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Escape%20Tsunami%20For%20Brainrot"
+        },
+        {
             Name    = "Rivals",
             Url     = "https://raw.githubusercontent.com/iblameaabis/Enchanted/refs/heads/main/Rivals"
         },
